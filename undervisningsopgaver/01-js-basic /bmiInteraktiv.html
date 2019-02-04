@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <script>
+        let vægt = prompt("Angiv vægt i antal kg");
+        let højde = prompt("Angiv højde i antal cm");
+        let nævner = højde * højde / 10000;
+        let bmi = vægt / nævner;
+
+        let resultat = `Bmi'en er ${bmi}. Vil du have besked om din vægtklasse?`;
+
+        confirm(resultat);
+
+        let vægtKlasse = `Vægtklasse:`;
+
+        if (bmi < 19) {
+            vægtKlasse = vægtKlasse + "undervægtig"
+        }
+
+        if (bmi >= 19 && bmi <= 25) {
+            vægtKlasse = vægtKlasse + "normal"
+        }
+
+        if (bmi > 25 && bmi <= 30) {
+            vægtKlasse = vægtKlasse + "overvægtig"
+        }
+
+        if (bmi > 30 && bmi <= 35) {
+            vægtKlasse = vægtKlasse + "fed"
+        }
+
+        if (bmi > 35 && bmi <= 40) {
+            vægtKlasse = vægtKlasse + "svær fedme"
+        }
+
+        if (bmi > 40) {
+            vægtKlasse = vægtKlasse + "ekstremt fedme"
+        }
+
+        confirm(vægtKlasse);
+    </script>
+</body>
+
+</html>
