@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<style>
+
+    body {
+        background-color: #FD5F48
+    }
+
+    .style {
+        background-color: #fff;
+        border: 2px #000 solid;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    @media only screen and (min-width: 600px) {
+
+        #liste {
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+
+    }
+
+    @media only screen and (min-width: 800px) {
+
+        #liste {
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+    }
+</style>
+
+
+<body>
+
+    <div id="liste">
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let alleReter = [];
+            hentJson();
+
+
+            async function hentJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                console.log(jsonData);
+                alleReter = await jsonData.json();
+                console.log(alleReter);
+                visRet();
+
+
+            }
+
+            function visRet() {
+
+
+                let destination = document.querySelector("#liste");
+
+                alleReter.forEach(ret => {
+                    destination.innerHTML += `<div class="style"><h2>${ret.navn}</h2>  <p>${ret.pris},-</p> <p>${ret.kort}</p><img src = imgs/large/${ret.billede}.jpg></div>`;
+
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>
