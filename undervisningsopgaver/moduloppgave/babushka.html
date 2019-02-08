@@ -16,8 +16,24 @@
 
     .style {
         background-color: #fff;
-        margin: 10px;
-        padding: 10px;
+        margin: 7px;
+        text-align: center;
+    }
+
+    #navn{
+        height: 7vw;
+        margin-top: 1vw;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin: 2vw;
+    }
+
+    .img-container {
+        background-color: antiquewhite;
+        height: 50vw;
+        overflow: hidden;
     }
 
     img {
@@ -28,8 +44,12 @@
 
         #liste {
             display: grid;
-            grid-template-columns: auto auto;
+            grid-template-columns: 1fr 1fr;
         }
+
+        .img-container {
+        height: 30vw;
+    }
 
     }
 
@@ -37,8 +57,24 @@
 
         #liste {
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: 1fr 1fr 1fr;
         }
+
+         .img-container {
+        height: 19vw;
+    }
+    }
+
+     @media only screen and (min-width: 1300px) {
+
+        body {
+            margin-left: 6vw;
+            margin-right: 6vw;
+        }
+
+        .img-container {
+            height: 15vw;
+    }
     }
 </style>
 
@@ -73,7 +109,7 @@
                 let destination = document.querySelector("#liste");
 
                 alleReter.forEach(ret => {
-                    destination.innerHTML += `<div class="style"><h2>${ret.navn}</h2>  <p>${ret.pris},-</p> <p>${ret.kort}</p><img src = imgs/large/${ret.billede}.jpg></div>`;
+                    destination.innerHTML += `<div class="style"><div class="img-container"><img src = imgs/large/${ret.billede}.jpg></div><h2 id="navn">${ret.navn}</h2>   <p>${ret.kort}</p><p>Pris: ${ret.pris},-</p></div>`;
 
                 })
             }
