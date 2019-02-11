@@ -26,6 +26,10 @@
         background-color: red;
     }
 
+    h1 {
+        text-align: center;
+    }
+
 
     @media only screen and (min-width: 600px) {
 
@@ -101,7 +105,11 @@
             });
 
             function filtrering(){
-                document.querySelector("h1").textContent=this.getAttribute("data-hold");
+                document.querySelectorAll(".filter").forEach(but => {
+                    but.classList.remove("valgt");
+                    })
+                    this.classList.add("valgt");
+                document.querySelector("h1").textContent=this.textContent;
                 filter = this.getAttribute("data-hold");
                 console.log(filter);
                 visPerson();
