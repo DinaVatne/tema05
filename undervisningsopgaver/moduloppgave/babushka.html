@@ -14,6 +14,8 @@
      body {
         background-color: #FFFAFA;
         font-family: 'Pontano Sans', sans-serif;
+        background-repeat: no-repeat;
+
     }
 
     header {
@@ -27,7 +29,7 @@
     h1 {
         text-align: center;
         text-transform: uppercase;
-        font-size: 4rem;
+        font-size: 3rem;
 
     }
 
@@ -35,10 +37,28 @@
         text-align: center;
     }
 
-    .menu{
-        text-align: center;
+    #navn {
+        font-size: 2rem;
+        margin-top: 6px;
+        background-color: aqua;
+        padding: 20px;
+
     }
 
+    .menu{
+        text-align: center;
+        border: none;
+    }
+
+    .filter {
+        border: none;
+        font-size: 1.1rem;
+        width: 140px;
+        padding: 18px;
+        margin-bottom: 6px;
+        background-color: #F86262;
+
+    }
 
 
     .style {
@@ -69,7 +89,10 @@
 
     @media only screen and (min-width: 600px) {
 
-        font-size: 6rem;
+        h1 {
+           font-size: 4rem;
+        }
+
 
         #liste {
             display: grid;
@@ -119,7 +142,7 @@
 
     <h2>Alle reter</h2>
     <div class="menu">
-        <button class="filter valgt" data-kategori="alle">Alle</button>
+        <button class="filter valgt" data-kategori="alle">Alle retter</button>
          <button class="filter" data-kategori="forretter">Forretter</button>
          <button class="filter" data-kategori="hovedretter">Hovedretter</button>
         <button class="filter" data-kategori="desserter">Desserter</button>
@@ -155,13 +178,13 @@
                     if(filter=="alle" || filter == ret.kategori){
                     destination.innerHTML += `
                         <div class="style">
+                            <h3 id="navn">${ret.navn}</h3>
                             <div class="img-container">
                                 <img src = imgs/large/${ret.billede}.jpg>
                             </div>
-                            <h3 id="navn">${ret.navn}</h3>
                             <p>${ret.kort}</p>
                             <p>Pris: ${ret.pris},-</p>
-                            <p>${ret.kategori}</p>
+                            <p>Kategori: ${ret.kategori}</p>
                         </div>`;
                     }
                 })
