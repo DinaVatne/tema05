@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <link href="http://fonts.googleapis.com/css?family=Pontano+Sans" rel="stylesheet">
+</head>
+
+<style>
+     body {
+        background-color: #FFFAFA;
+        font-family: 'Pontano Sans', sans-serif;
+        background-repeat: no-repeat;
+    }
+    header {
+        background-color: #AC3535;
+        padding-top: 8vw;
+        padding-bottom: 8vw;
+        width: 100%;
+        margin: -10;
+    }
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 3rem;
+    }
+    h2 {
+        text-align: center;
+    }
+    #navn {
+        font-size: 2rem;
+        margin-top: 6px;
+        background-color: aqua;
+        padding: 20px;
+    }
+    .menu{
+        text-align: center;
+        border: none;
+    }
+    .filter {
+        border: none;
+        font-size: 1.1rem;
+        width: 140px;
+        padding: 18px;
+        margin-bottom: 6px;
+        background-color: #F86262;
+    }
+    .style {
+        background-color: #fff;
+        margin: 7px;
+        text-align: center;
+    }
+    #navn{
+        height: 7vw;
+        margin-top: 1vw;
+        margin-bottom: 0;
+    }
+    p {
+        margin: 2vw;
+    }
+    .img-container {
+        background-color: antiquewhite;
+        height: 50vw;
+        overflow: hidden;
+    }
+    img {
+        width: 100%;
+    }
+
+
+
+    @media only screen and (min-width: 600px) {
+        h1 {
+           font-size: 4rem;
+        }
+        #liste {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .img-container {
+        height: 30vw;
+    }
+    }
+    @media only screen and (min-width: 800px) {
+        h1 {
+        font-size: 4rem;
+            }
+        #liste {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+         .img-container {
+        height: 19vw;
+    }
+    }
+     @media only screen and (min-width: 1300px) {
+        body {
+            margin-left: 6vw;
+            margin-right: 6vw;
+        }
+        .img-container {
+            height: 15vw;
+    }
+    }
+</style>
+
+
+<body>
+    <header>
+        <h1>Bistro Babushka</h1>
+    </header>
+
+    <h2>Alle reter</h2>
+    <div class="menu">
+        <button class="filter valgt" data-kategori="alle">Alle retter</button>
+         <button class="filter" data-kategori="forretter">Forretter</button>
+         <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+        <button class="filter" data-kategori="desserter">Desserter</button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+         <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+    </div>
+
+    <div id="liste">
+    </div>
+
+
+    <script>
+        let alleReter = [];
+        let filter ="alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+
+            hentJson();
+
+            async function hentJson() {
+                let jsonData = await
+                fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                alleReter = await jsonData.json();
+                visRet();
+                }
+            function visRet() {
+                let destination = document.querySelector("#liste");
+                destination.innerHTML ="";
+                alleReter.forEach(ret => {
+                    if(filter=="alle" || filter == ret.kategori){
+                    let template = `
+                        <div class="style">
+                            <h3 id="navn">${ret.navn}</h3>
+                            <div class="img-container">
+                                <img src = imgs/large/${ret.billede}.jpg>
+                            </div>
+                            <p>${ret.kort}</p>
+                            <p>Pris: ${ret.pris},-</p>
+                            <p>Kategori: ${ret.kategori}</p>
+                        </div>`;
+
+                        destination.insertAdjacentHTML("beforeend", template);
+
+                        destination.lastElementChild.addEventListener("click", () =>{
+                            location.href = "single.html?id=" + ret.id;
+                        });
+                    }
+                });
+            }
+        document.querySelectorAll(".filter").forEach(but => {
+            but.addEventListener("click", filtrering);
+        });
+        function filtrering(){
+           document.querySelectorAll(".filter").forEach(but => {
+               but.classList.remove("valgt");
+           })
+            this.classList.add("valgt");
+        document.querySelector("h2").textContent=this.textContent;
+            filter = this.getAttribute("data-kategori");
+            console.log(filter);
+            visRet();
+        }
+        }
+    </script>
+</body>
+
+</html>
+
