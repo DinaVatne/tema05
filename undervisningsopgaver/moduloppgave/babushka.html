@@ -87,6 +87,33 @@
         width: 100%;
     }
 
+     #popup {
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        background-color: hsla(0, 15%, 48%, 0.5);
+        display: none;
+    }
+
+    #luk {
+        position: fixed;
+        right: 2rem;
+        padding-right: 2rem;
+    }
+
+    #indhold {
+        min-height: 50vh;
+        background-color: white;
+        width: 70vw;
+        margin: 4rem auto;
+    }
+
+    #luk button {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+    }
+
     @media only screen and (min-width: 600px) {
 
         h1 {
@@ -140,7 +167,7 @@
         <h1>Bistro Babushka</h1>
     </header>
 
-    <h2>Alle reter</h2>
+    <h2>Alle retter</h2>
     <div class="menu">
         <button class="filter valgt" data-kategori="alle">Alle retter</button>
          <button class="filter" data-kategori="forretter">Forretter</button>
@@ -153,10 +180,17 @@
     <div id="liste">
     </div>
 
+    <div id="popup">
+        <div id="luk">
+            <button> X </button>
+        </div>
+        <div id="indhold"></div>
+    </div>
+
 
     <script>
 
-        let alleReter = [];
+        let alleRetter = [];
         let filter ="alle";
 
         document.addEventListener("DOMContentLoaded", start);
@@ -167,14 +201,17 @@
 
             async function hentJson() {
                 let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
-                alleReter = await jsonData.json();
+                alleRetterer = await jsonData.json();
+                alleRetterer.sort((a,b) =>{
+                    return a.navn.localeCompare(b.navn);
+                });
                 visRet();
                 }
 
             function visRet() {
                 let destination = document.querySelector("#liste");
                 destination.innerHTML ="";
-                alleReter.forEach(ret => {
+                alleRetter.forEach(ret => {
                     if(filter=="alle" || filter == ret.kategori){
                     destination.innerHTML += `
                         <div class="style">
@@ -186,8 +223,31 @@
                             <p>Pris: ${ret.pris},-</p>
                             <p>Kategori: ${ret.kategori}</p>
                         </div>`;
+
+                    destination.insertAdjacentHTML("beforeend", template);
+                    destination.lastElementChild.addEventListener("click", () =>{
+                        visSingle(ret);
+
+                    });
+
+                    function visSingle(){
+                        document.querySelector("#indhold").innerHTML = `
+                            <div class="style">
+                               <h3 id="navn">${ret.navn}</h3>
+                            </div>`;
+
+                        document.querySelector("#popup").style.display="block";
+                        document.querySelector("#popup #luk").addEventListener("click", close);
                     }
-                })
+
+                    function close () {
+                        document.querySelector("#popup").style.display = "none";
+                    }
+
+                    }
+                    })
+
+
             }
 
         document.querySelectorAll(".filter").forEach(but => {
