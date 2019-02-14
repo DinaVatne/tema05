@@ -9,6 +9,15 @@
 </head>
 
 <style>
+    body {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
     .style {
         border: 2px #000 solid;
     }
@@ -28,14 +37,6 @@
 
     h1 {
         text-align: center;
-    }
-
-    #popup {
-        top: 0;
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        background-color: hsla(0, 15%, 48%, 0.5);
     }
 
 
@@ -102,7 +103,7 @@
                 destination.innerHTML ="";
                 allePersoner.forEach(person => {
                     if(filter=="alle" || filter == person.hold){
-                        destination.innerHTML += `
+                        let template = `
                             <div class="style">
                                 <h2>${person.navn}</h2> <p>https://github.com/${person.github}</p>
                                 <img src = ${person.billede}> <p>${person.alder}</p> <p>${person.køn}</p>
@@ -110,6 +111,14 @@
                                 <p>${person.hold}</p>
                                 <p>${person.historie}</p>
                             </div>`;
+
+                        destination.insertAdjacentHTML("beforeend", template);
+                        destination.lastElementChild.addEventListener("click", () =>{
+                            location.href = "06-single.html?github=" + person.github;
+
+                        });
+
+
                         }
                     })
                 }

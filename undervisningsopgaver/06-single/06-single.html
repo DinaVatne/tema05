@@ -9,6 +9,15 @@
 </head>
 
 <style>
+    body {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
     .style {
         border: 2px #000 solid;
     }
@@ -30,14 +39,27 @@
         text-align: center;
     }
 
-    #popup {
-        top: 0;
+    #single {
         width: 100vw;
         height: 100vh;
-        position: fixed;
         background-color: hsla(0, 15%, 48%, 0.5);
     }
 
+    #tilbage {
+
+    }
+
+    #indhold {
+        min-height: 50vh;
+        background-color: white;
+        width: 70vw;
+        margin: 4rem auto;
+    }
+
+    #tilbage button {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+    }
 
     @media only screen and (min-width: 600px) {
 
@@ -62,19 +84,22 @@
 
 <body>
     <h1>Alle</h1>
-    <div class="menu">
-         <button class="filter valgt" data-hold="alle">Alle</button>
-         <button class="filter" data-hold="a">Hold A</button>
-         <button class="filter" data-hold="b">Hold B</button>
-    </div>
 
-    <div id="liste">
+
+    <div id="single">
+        <div id="tilbage">
+            <button> << </button>
+        </div>
+        <div id="indhold"></div>
     </div>
 
 
     <script>
 
-        let filter="alle";
+        let urlParams = new URLSearchParams(window.location.search)
+        let github = urlParams.get("github");
+        console.log(github);
+
         let allePersoner = [];
 
 
@@ -88,50 +113,39 @@
                 let jsonData = await
                 fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
                 allePersoner =  await jsonData.json();
-                /*allePersoner.sort((a,b) => {
-                    return(a.alder - b.alder);
-                });*/
-                allePersoner.sort((a,b) =>{
-                    return a.navn.localeCompare(b.navn);
-                });
+
                 visPerson();
             }
 
             function visPerson() {
-                let destination = document.querySelector("#liste");
+                let destination = document.querySelector("#indhold");
                 destination.innerHTML ="";
                 allePersoner.forEach(person => {
-                    if(filter=="alle" || filter == person.hold){
-                        destination.innerHTML += `
+                    if(github==person.github){
+                        let template = `
                             <div class="style">
-                                <h2>${person.navn}</h2> <p>https://github.com/${person.github}</p>
+                                <h2>${person.navn}</h2> <p>https://github.com/${person.hold}</p>
                                 <img src = ${person.billede}> <p>${person.alder}</p> <p>${person.køn}</p>
                                 <p>${person.email}</p>
                                 <p>${person.hold}</p>
                                 <p>${person.historie}</p>
                             </div>`;
+
+                            destination.insertAdjacentHTML("beforeend", template);
+
+                            document.querySelector("#tilbage").addEventListener("click",()=>{
+                                location.href="05-kald.html";
+                            });
                         }
-                    })
+
+
+
+                        });
                 }
 
-            document.querySelectorAll(".filter").forEach(but => {
-                but.addEventListener("click", filtrering);
 
-            });
 
-            function filtrering(){
-                document.querySelectorAll(".filter").forEach(but => {
-                    but.classList.remove("valgt");
-                    })
-                    this.classList.add("valgt");
-                document.querySelector("h1").textContent=this.textContent;
-                filter = this.getAttribute("data-hold");
-                console.log(filter);
-                visPerson();
-            }
         }
-
-
 
     </script>
 </body>
