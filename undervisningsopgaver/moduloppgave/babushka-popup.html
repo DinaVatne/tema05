@@ -10,17 +10,17 @@
 </head>
 
 <style>
-     body {
-        background-color: #FFFAFA;
+      body {
+        background-color: #E5E0DB;
         font-family: 'Pontano Sans', sans-serif;
-        background-repeat: no-repeat;
+
     }
     header {
-        background-color: #AC3535;
+        background-color: #fff;
         padding-top: 8vw;
         padding-bottom: 8vw;
         width: 100%;
-        margin: -10;
+
     }
     h1 {
         text-align: center;
@@ -29,13 +29,18 @@
     }
     h2 {
         text-align: center;
+        text-transform: uppercase;
     }
     #navn {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-top: 6px;
-        background-color: aqua;
         padding: 20px;
     }
+
+    .pris{
+        font-size: 1.3rem;
+    }
+
     .menu{
         text-align: center;
         border: none;
@@ -46,7 +51,7 @@
         width: 140px;
         padding: 18px;
         margin-bottom: 6px;
-        background-color: #F86262;
+        background-color: #C51209;
     }
     .style {
         background-color: #fff;
@@ -81,8 +86,8 @@
 
     #luk {
         position: fixed;
-        right: 2rem;
-        padding-right: 2rem;
+        right: 3vw;
+        top : 3vw;
     }
 
     #indhold {
@@ -93,10 +98,9 @@
     }
 
     #luk button {
-        font-size: 2rem;
-        padding: 1rem 2rem;
+        font-size: 1.5rem;
+        padding: 2vw 4vw;
     }
-
 
 
     @media only screen and (min-width: 600px) {
@@ -140,7 +144,7 @@
         <h1>Bistro Babushka</h1>
     </header>
 
-    <h2>Alle reter</h2>
+    <h2>Alle retter</h2>
     <div class="menu">
         <button class="filter valgt" data-kategori="alle">Alle retter</button>
          <button class="filter" data-kategori="forretter">Forretter</button>
@@ -190,7 +194,7 @@
                                 <img src = imgs/large/${ret.billede}.jpg>
                             </div>
                             <p>${ret.kort}</p>
-                            <p>Pris: ${ret.pris},-</p>
+                            <p class="pris">Pris: ${ret.pris},-</p>
                             <p>Kategori: ${ret.kategori}</p>
                         </div>`;
 
@@ -207,8 +211,8 @@
                             <div class="img-container">
                                 <img src = imgs/large/${ret.billede}.jpg>
                             </div>
-                            <p>${ret.kort}</p>
-                            <p>Pris: ${ret.pris},-</p>
+                            <p>${ret.lang}</p>
+                            <p class="pris">Pris: ${ret.pris},-</p>
                             <p>Kategori: ${ret.kategori}</p>
                             </div>`;
 

@@ -10,10 +10,10 @@
 </head>
 
 <style>
-     body {
-        background-color: #FFFAFA;
+      body {
+        background-color: #F2E1CE;
         font-family: 'Pontano Sans', sans-serif;
-        background-repeat: no-repeat;
+
     }
     header {
         background-color: #AC3535;
@@ -29,13 +29,18 @@
     }
     h2 {
         text-align: center;
+        text-transform: uppercase;
     }
     #navn {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-top: 6px;
-        background-color: aqua;
         padding: 20px;
     }
+
+    .pris{
+        font-size: 1.3rem;
+    }
+
     .menu{
         text-align: center;
         border: none;
@@ -70,8 +75,19 @@
         width: 100%;
     }
 
-    #tilbage {
+    #popup {
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        background-color: hsla(0, 15%, 48%, 0.5);
+        display: none;
+    }
 
+    #luk {
+        position: fixed;
+        right: 3vw;
+        top : 3vw;
     }
 
     #indhold {
@@ -81,10 +97,11 @@
         margin: 4rem auto;
     }
 
-    #tilbage button {
-        font-size: 2rem;
-        padding: 1rem 2rem;
+    #luk button {
+        font-size: 1.5rem;
+        padding: 2vw 4vw;
     }
+
 
 
 
@@ -179,8 +196,8 @@
                             <div class="img-container">
                                 <img src = imgs/large/${ret.billede}.jpg>
                             </div>
-                            <p>${ret.kort}</p>
-                            <p>Pris: ${ret.pris},-</p>
+                            <p>${ret.lang}</p>
+                            <p class="pris">Pris: ${ret.pris},-</p>
                             <p>Kategori: ${ret.kategori}</p>
                         </div>`;
 
